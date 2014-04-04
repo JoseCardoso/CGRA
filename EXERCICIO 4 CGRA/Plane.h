@@ -11,9 +11,13 @@ public:
 	Plane(int);
 	~Plane(void);
 	void draw();
+	void drawCentered();
+	void setHeight(double h);
+	void setWidth(double w);
 
 	//glTextlevelparameter
 private:
 	int _numDivisions; // Number of triangles that constitute rows/columns
+	double height, width;
 };
 

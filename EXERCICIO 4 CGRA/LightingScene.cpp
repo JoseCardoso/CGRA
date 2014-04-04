@@ -188,7 +188,7 @@ void LightingScene::display()
 		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
 		glRotated(90.0,1,0,0);
 		slidesAppearence->apply();
-		boardA->draw();
+		boardA->drawCentered();
 	glPopMatrix();
 	
 	//PlaneB
@@ -197,7 +197,7 @@ void LightingScene::display()
 		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
 		glRotated(90.0,1,0,0);
 		boardAppearence->apply();
-		boardB->draw();
+		boardB->drawCentered();
 	glPopMatrix();
 
 	//cylinder
