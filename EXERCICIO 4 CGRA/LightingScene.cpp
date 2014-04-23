@@ -114,6 +114,15 @@ void LightingScene::init()
 	boardAppearence = new CGFappearance(ambientNull,difBoard,specBoard,shininessBoard);
 	boardAppearence->setTexture("board.png");
 	boardAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+	
+
+	windowAppearence = new CGFappearance(ambientNull , difA , specA , shininessA);
+	windowAppearence->setTexture("window.png");
+	windowAppearence->setTextureWrap(GL_CLAMP, GL_CLAMP);
+
+	floorAppearence = new CGFappearance(ambientNull, difA, specA , shininessA);
+	floorAppearence->setTexture("floor.png");
+	floorAppearence->setTextureWrap(GL_CLAMP, GL_CLAMP);
 
 }
 
@@ -168,9 +177,11 @@ void LightingScene::display()
 	glPushMatrix();
 		glTranslated(0,4,7.5);
 		glRotated(-90.0,0,0,1);
-
 		glScaled(8,0.2,15);
-		wall->draw();
+		wall->setHeight(8);
+		wall->setWidth(15);
+		windowAppearence->apply();
+		wall->drawCentered(true);
 	glPopMatrix();
 
 	//PlaneWall
@@ -178,6 +189,7 @@ void LightingScene::display()
 		glTranslated(7.5,4,0);
 		glRotated(90.0,1,0,0);
 		glScaled(15,0.2,8);
+		materialA->apply();
 		wall->draw();
 	glPopMatrix();
 
@@ -186,18 +198,23 @@ void LightingScene::display()
 	glPushMatrix();
 		glTranslated(4,4,0.2);
 		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+		boardA->setHeight(BOARD_HEIGHT);
+		boardA->setWidth(BOARD_WIDTH);
 		glRotated(90.0,1,0,0);
 		slidesAppearence->apply();
-		boardA->drawCentered();
+		boardA->drawCentered(false);
 	glPopMatrix();
 	
 	//PlaneB
 	glPushMatrix();
+		boardAppearence->apply();
 		glTranslated(10.5,4,0.2);
 		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+		boardB->setHeight(BOARD_HEIGHT);
+		boardB->setWidth(BOARD_WIDTH);
 		glRotated(90.0,1,0,0);
 		boardAppearence->apply();
-		boardB->drawCentered();
+		boardB->drawCentered(false);
 	glPopMatrix();
 
 	//cylinder

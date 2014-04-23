@@ -11,7 +11,7 @@ public:
 	Plane(int);
 	~Plane(void);
 	void draw();
-	void drawCentered();
+	void drawCentered(bool window);
 	void setHeight(double h);
 	void setWidth(double w);
 
