@@ -234,7 +234,9 @@ void LightingScene::display()
 	//robot
 
 	glPushMatrix();
-	glTranslated(8,0,8);
+	robotAppearence->apply();
+	glTranslated(4,0,4);
+	glRotated(180,0,1,0);
 	robot->draw();
 	glPopMatrix();
 

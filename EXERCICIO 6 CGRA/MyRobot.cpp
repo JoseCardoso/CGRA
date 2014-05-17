@@ -7,24 +7,24 @@ myRobot :: myRobot( int stacks)
 
 void myRobot :: draw()
 {
-	glPushMatrix();
+	/*glPushMatrix();
 	glRotated(90,0,1,0);
-	drawComponent();
+	drawComponent(2);
 	glPopMatrix();
 
 
 	glPushMatrix();
 	glRotated(180,0,1,0);
-	drawComponent();
+	drawComponent(3);
 	glPopMatrix();
 
 	glPushMatrix();
 	glRotated(-90,0,1,0);
-	drawComponent();
+	drawComponent(4);
 	glPopMatrix();
 
-
-	drawComponent();
+	*/
+	drawComponent(1);
 
 
 	glPushMatrix();
@@ -40,7 +40,7 @@ void myRobot :: draw()
 
 }
 
-void myRobot :: drawComponent()
+void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = trás, 4 = direita
 {
 	float alpha = -45 * PI /180;//angulo do 1º vertice
 	float incA = 30 * PI /180;//metade de cada angulo 
@@ -82,7 +82,9 @@ void myRobot :: drawComponent()
 		{
 			glBegin(GL_TRIANGLES);
 			glNormal3d(0,1,0);
+			glTexCoord2d(0.5 ,0.5);
 			glVertex3d(0,1,0);
+			//glTexCoord2d( , 1-0.25);
 			glVertex3d(coordx[stacks-1][i],1,coordz[stacks-1][i]);	
 			glVertex3d(coordx[stacks-1][i+1] , 1 , coordz[stacks-1][i+1]);
 			glEnd();
@@ -118,15 +120,20 @@ void myRobot :: drawComponent()
 		{
 			glBegin(GL_QUADS);
 
+			glTexCoord2d((float) i/(stacks-1) + j*(1-(2*i/ (stacks-1)) )/4  , (float) ((1-0.25)/i)/2 );
 			glNormal3d(normalx[i][j],0,normalz[i][j]); 
 			glVertex3d(coordx[i][j] , coordy[i][j] , coordz[i][j]);
 
+
+			glTexCoord2d((float) i/(stacks-1) + (j+1)*(1-(2*i/ (stacks-1)) )/4  , (float) ((1-0.25)/i)/2 );
 			glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 			glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
 
+			glTexCoord2d((float) (i+1)/(stacks-1) + (j+1)*(1-(2*i/ (stacks-1)) )/4  , (float) ((1-0.25)/(i+1)/2 ));
 			glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
 			glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
 
+			glTexCoord2d((float) (i+1)/(stacks-1) + j*(1-(2*i/ (stacks-1)) )/4  , (float) ((1-0.25)/(i+1)/2 ));
 			glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
 			glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
 			glEnd();

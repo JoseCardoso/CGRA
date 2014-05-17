@@ -18,7 +18,7 @@ class myRobot : public CGFobject {
 	public:
 		myRobot(int stacks);
 		void draw();
-		void drawComponent();
+		void drawComponent(int side);
 
 };
 
