@@ -12,19 +12,32 @@ void myRobot :: draw()
 	drawComponent();
 	glPopMatrix();
 
-	
+
 	glPushMatrix();
 	glRotated(180,0,1,0);
 	drawComponent();
 	glPopMatrix();
-	
+
 	glPushMatrix();
 	glRotated(-90,0,1,0);
 	drawComponent();
 	glPopMatrix();
-	
-	
+
+
 	drawComponent();
+
+
+	glPushMatrix();
+	glRotated(180, 1,0,0);
+	glBegin(GL_QUADS);
+	glNormal3d(0, 1,0);
+	glVertex3d(0.5,0,0.5);
+	glVertex3d(0.5,0,-0.5);
+	glVertex3d(-0.5,0,-0.5);
+	glVertex3d(-0.5,0,0.5);
+	glEnd();
+	glPopMatrix();
+
 }
 
 void myRobot :: drawComponent()
@@ -48,19 +61,35 @@ void myRobot :: drawComponent()
 		normalz[i].resize(4);
 	}
 
-	double normalize = sqrt(1+0.25*0.25);
 	for (int i = 0 ; i < 4 ; i ++ )
 	{
+		double normalize;
+
 		coordx[0][i] = 0.5*tan(alpha + i*incA);
 		coordy[0][i] = 0;
 		coordz[0][i] = 0.5;
-		
+
 		normalx[0][i] = 0;
 		normalz[0][i] = 1;
 
 		coordx[stacks-1][i] = 0.25*sin(alpha + incA*i); 
 		coordy[stacks-1][i] = 1;
 		coordz[stacks-1][i] =  0.25*cos(alpha + incA*i);
+		
+	
+		//drawing top
+		for (int i = 0 ; i < 3 ; i++)
+		{
+			glBegin(GL_TRIANGLES);
+			glNormal3d(0,1,0);
+			glVertex3d(0,1,0);
+			glVertex3d(coordx[stacks-1][i],1,coordz[stacks-1][i]);	
+			glVertex3d(coordx[stacks-1][i+1] , 1 , coordz[stacks-1][i+1]);
+			glEnd();
+		}
+
+
+		normalize = sqrt( (coordx[stacks-1][i] * coordx[stacks-1][i]) + (coordz[stacks-1][i] * coordz[stacks-1][i]));
 
 		normalx[stacks-1][i] = coordx[stacks-1][i]/normalize;
 		normalz[stacks-1][i] = coordz[stacks-1][i]/normalize;
@@ -69,7 +98,6 @@ void myRobot :: drawComponent()
 		double incZ = (double) (coordz[stacks-1][i] - coordz[0][i])/ stacks;
 
 		double incNx = normalx[stacks-1][i] /stacks;
-		
 		double incNz = (normalz[stacks-1][i] -1) /stacks;
 
 		for (int j = 1 ; j < stacks - 1 ; j++) // começa na 2 linha a contar por baixo e termina na penultima
@@ -77,11 +105,8 @@ void myRobot :: drawComponent()
 			coordx[j][i] = (double) incX + coordx[j-1][i];
 			coordy[j][i] = (double) j/stacks;
 			coordz[j][i] = (double) incZ + coordz[j-1][i];
-			//coordz[j][i] = (double) coordz[0][i] + (coordz[stacks-1][i] - coordz[0][i])*((coordx[j][i] - coordx[0][i])/(coordx[stacks-1][i] - coordx[0][i]));
-			normalx[j][i] = j*incNx;//confirmar depois
-			normalz[j][i] = j*incNz;
-
-
+			normalx[j][i] = (double) incNx + normalx[j-1][i];//confirmar depois
+			normalz[j][i] = (double) incNz + normalz[j-1][i];
 		}
 	}
 
@@ -92,16 +117,16 @@ void myRobot :: drawComponent()
 		for (unsigned int j = 0 ; j < 3 ; j++)
 		{
 			glBegin(GL_QUADS);
-			
+
 			glNormal3d(normalx[i][j],0,normalz[i][j]); 
 			glVertex3d(coordx[i][j] , coordy[i][j] , coordz[i][j]);
-			
+
 			glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 			glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
-			
+
 			glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
 			glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
-			
+
 			glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
 			glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
 			glEnd();

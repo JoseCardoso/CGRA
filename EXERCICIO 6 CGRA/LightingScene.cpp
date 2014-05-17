@@ -117,6 +117,10 @@ void LightingScene::init()
 	boardAppearence = new CGFappearance(ambientNull,difBoard,specBoard,shininessBoard);
 	boardAppearence->setTexture("board.png");
 	boardAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	robotAppearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robotAppearence->setTexture("robot1.jpg");
+	robotAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
 	setUpdatePeriod(100);
 }
 
@@ -230,6 +234,7 @@ void LightingScene::display()
 	//robot
 
 	glPushMatrix();
+	glTranslated(8,0,8);
 	robot->draw();
 	glPopMatrix();
 

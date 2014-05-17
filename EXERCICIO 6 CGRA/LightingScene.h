@@ -41,6 +41,7 @@ public:
 	CGFappearance* wallAppearence;
 	CGFappearance* boardAppearence;
 	CGFappearance* windowAppearence;
+	CGFappearance* robotAppearence;
 	
 	~LightingScene();
 };
