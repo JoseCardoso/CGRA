@@ -57,6 +57,12 @@ float yellow[4]={1,1,0,1};
 
 void LightingScene::init() 
 {
+	sceneVar=0;
+	light0On = 1;
+	light1On = 1;
+	light2On = 0;
+	light3On = 0;
+
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
@@ -65,7 +71,7 @@ void LightingScene::init()
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);  
 	
 	// Define ambient light (do not confuse with ambient component of individual lights)
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientNull);  
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientLight);  
 	
 	// Declares and enables two lights, with null ambient component
 
@@ -75,14 +81,42 @@ void LightingScene::init()
 	light0 = new CGFlight(GL_LIGHT0, light0_pos);
 	light0->setAmbient(ambientNull);
 	light0->setSpecular(yellow);
-	//light0->disable();
-	light0->enable();
+	
+	if (light0On == 0)
+		light0->disable();
+	else
+		light0->enable();
+
 
 	light1 = new CGFlight(GL_LIGHT1, light1_pos);
 	light1->setAmbient(ambientNull);
 	
-	//light1->disable();
-	light1->enable();
+	if (light1On == 0)
+		light1->disable();
+	else
+		light1->enable();
+	
+	
+	light2 = new CGFlight(GL_LIGHT2, light2_pos);
+	light2->setAmbient(ambientNull);
+	
+	if (light2On == 0)
+		light2->disable();
+	else
+		light2->enable();
+	
+
+	
+	light3 = new CGFlight(GL_LIGHT3, light3_pos);
+	light3->setAmbient(ambientNull);
+	light3->setSpecular(yellow);
+	light3->setKc(0);
+	light3->setKl(0);
+	light3->setKq(4);
+	if (light3On == 0)
+		light3->disable();
+	else
+		light3->enable();
 	
 	
 
@@ -139,10 +173,33 @@ void LightingScene::display()
 	// Apply transformations corresponding to the camera position relative to the origin
 	CGFscene::activeCamera->applyView();
 
-	light0->draw();
-	light1->draw();
-//	light2->draw();
-//	light3->draw();
+	
+	if(light0On != 0){
+		light0->enable();
+		light0->draw();
+		}
+	else
+		light0->disable();
+	if (light1On != 0){
+		light1->enable();
+		light1->draw();
+		}
+	else
+		light1->disable();
+	if(light2On != 0)
+		{
+		light2->enable();
+		light2->draw();
+		}
+	else
+		light2->disable();
+	if(light3On != 0)
+		{
+		light3->enable();
+		light3->draw();
+		}
+	else
+		light3->disable();
 
 	// Draw axis
 	axis.draw();
@@ -156,13 +213,13 @@ void LightingScene::display()
 		glTranslated(5,0,8);
 		table->draw(materialA, tableAppearence);
 	glPopMatrix();
-	
+	/*
 	//Second Table
 	glPushMatrix();
 		glTranslated(12,0,8);
 		table->draw(materialA, tableAppearence);
 	glPopMatrix();
-
+	*/
 	materialA->apply();
 	//Floor
 	glPushMatrix();
@@ -236,7 +293,6 @@ void LightingScene::display()
 	glPushMatrix();
 	robotAppearence->apply();
 	glTranslated(4,0,4);
-	glRotated(180,0,1,0);
 	robot->draw();
 	glPopMatrix();
 
@@ -268,4 +324,10 @@ LightingScene::~LightingScene()
 	delete(boardB);
 	delete(materialA);
 	delete(materialB);
+}
+
+void LightingScene::toggleSomething(unsigned char key)
+{
+
+	robot->processKeyboard(key);
 }

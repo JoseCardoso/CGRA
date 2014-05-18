@@ -14,11 +14,15 @@ using namespace std;
 class myRobot : public CGFobject {
 	
 	int stacks;
+	double teta; //angulo em relação a z de rotaçao ao premir a tecla
+	double x; //coordenadas para calcular avanço e recuo
+	double z; //
 
 	public:
 		myRobot(int stacks);
 		void draw();
 		void drawComponent(int side);
+		void processKeyboard(unsigned char key);
 
 };
 

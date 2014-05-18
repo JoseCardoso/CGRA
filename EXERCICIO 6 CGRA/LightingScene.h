@@ -9,13 +9,18 @@
 #include "myClockHand.h"
 #include "myCylinder.h"
 #include "MyRobot.h"
+#include "TPinterface.h"
 
 class LightingScene : public CGFscene
 {
+	 
 public:
+	int sceneVar;
+	int light0On, light1On, light2On, light3On;
 	void init();
 	void display();
 	void update(unsigned long millis);
+	void toggleSomething(unsigned char key);
 
 
 	CGFlight* light0;

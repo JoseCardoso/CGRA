@@ -2,40 +2,50 @@
 
 myRobot :: myRobot( int stacks)
 {	this->stacks = stacks;
+	this->teta = 0;
+	this->x = 0;
+	this->z = 0;
 }
 
 
 void myRobot :: draw()
 {
 	glPushMatrix();
-	glRotated(90,0,1,0);
-	drawComponent(2);
-	glPopMatrix();
+	glTranslated(x, 0 ,z);
+	glRotated(teta, 0 ,1,0);
+	
+
+		glPushMatrix();
+		glRotated(90,0,1,0);
+		drawComponent(2);
+		glPopMatrix();
 
 
-	glPushMatrix();
-	glRotated(180,0,1,0);
-	drawComponent(3);
-	glPopMatrix();
-
-	glPushMatrix();
-	glRotated(-90,0,1,0);
-	drawComponent(4);
-	glPopMatrix();
-
-
-	drawComponent(1);
+		glPushMatrix();	
+		glRotated(180,0,1,0);
+		drawComponent(3);		
+		glPopMatrix();
+	
+		glPushMatrix();
+		glRotated(-90,0,1,0);
+		drawComponent(4);
+		glPopMatrix();
 
 
-	glPushMatrix();
-	glRotated(180, 1,0,0);
-	glBegin(GL_QUADS);
-	glNormal3d(0, 1,0);
-	glVertex3d(0.5,0,0.5);
-	glVertex3d(0.5,0,-0.5);
-	glVertex3d(-0.5,0,-0.5);
-	glVertex3d(-0.5,0,0.5);
-	glEnd();
+		drawComponent(1);
+	
+
+		glPushMatrix();
+		glRotated(180, 1,0,0);
+		glBegin(GL_QUADS);
+		glNormal3d(0, 1,0);
+		glVertex3d(0.5,0,0.5);
+		glVertex3d(0.5,0,-0.5);
+		glVertex3d(-0.5,0,-0.5);
+		glVertex3d(-0.5,0,0.5);
+		glEnd();
+		glPopMatrix();
+
 	glPopMatrix();
 
 }
@@ -226,7 +236,7 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 		}
 		break;
 	case 4:
-			
+
 		for (unsigned int i = 0 ; i < stacks-1 ; i++)
 		{
 
@@ -258,5 +268,27 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 	}
 
 
+
+}
+
+void myRobot:: processKeyboard(unsigned char key)
+{
+	switch (key)
+	{
+	case 'J':
+		teta += 15; 
+		break;
+	case 'I':
+		x += 0.5*sin(teta*PI/180);
+		z += 0.5*cos(teta*PI/180);
+		break;
+	case 'K':
+		x -= 0.5*sin(teta*PI/180);
+		z -= 0.5*cos(teta*PI/180);
+		break;
+	case 'L':
+		teta -= 15; 
+		break;
+	}
 
 }
