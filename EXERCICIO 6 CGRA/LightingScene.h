@@ -13,7 +13,7 @@
 
 class LightingScene : public CGFscene
 {
-	 
+	 bool clockAnimation;
 public:
 	int sceneVar;
 	int light0On, light1On, light2On, light3On;
@@ -21,7 +21,9 @@ public:
 	void display();
 	void update(unsigned long millis);
 	void toggleSomething(unsigned char key);
-
+	int resetClock(int call);
+	int pauseClock(int call);
+	int pauseResetClock(int call);
 
 	CGFlight* light0;
 	CGFlight* light1;

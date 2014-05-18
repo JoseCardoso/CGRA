@@ -62,7 +62,7 @@ void LightingScene::init()
 	light1On = 1;
 	light2On = 0;
 	light3On = 0;
-
+	clockAnimation = true;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
@@ -112,7 +112,8 @@ void LightingScene::init()
 	light3->setSpecular(yellow);
 	light3->setKc(0);
 	light3->setKl(0);
-	light3->setKq(4);
+	light3->setKq(1);
+
 	if (light3On == 0)
 		light3->disable();
 	else
@@ -180,12 +181,14 @@ void LightingScene::display()
 		}
 	else
 		light0->disable();
+
 	if (light1On != 0){
 		light1->enable();
 		light1->draw();
 		}
 	else
 		light1->disable();
+
 	if(light2On != 0)
 		{
 		light2->enable();
@@ -193,6 +196,7 @@ void LightingScene::display()
 		}
 	else
 		light2->disable();
+
 	if(light3On != 0)
 		{
 		light3->enable();
@@ -308,8 +312,8 @@ void LightingScene::display()
 
 void LightingScene::update(unsigned long millis)
 {
-	
-	clock->update(millis);
+	if(clockAnimation)
+		clock->update(millis);
 
 }
 
@@ -330,4 +334,32 @@ void LightingScene::toggleSomething(unsigned char key)
 {
 
 	robot->processKeyboard(key);
+}
+
+int LightingScene:: pauseClock(int call)
+{
+	clockAnimation = !clockAnimation;
+	return clockAnimation;
+}
+
+int LightingScene:: resetClock(int call)
+{
+	clock = new myClock();
+	return 1;
+}
+
+
+int LightingScene:: pauseResetClock(int call)
+{
+	if(call = 0)
+	{
+	clockAnimation = !clockAnimation;
+	return 0;
+	}
+	else
+	{
+	clock = new myClock();
+	clockAnimation = !clockAnimation;
+	return 1;
+	}
 }

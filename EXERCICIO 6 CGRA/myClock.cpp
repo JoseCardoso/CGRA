@@ -1,5 +1,7 @@
 #include "myClock.h"
+#include <time.h>
 
+using namespace std;
 
 myClock :: myClock()
 {	
@@ -27,7 +29,7 @@ void myClock ::draw()
 
 	glPushMatrix();
 	glTranslated(0,0,0.21);
-	glScaled(2,0.8,1);
+	glScaled(0.8,0.8,1);
 	minutos->draw();
 	glPopMatrix();
 
@@ -49,8 +51,9 @@ void myClock:: update(unsigned long millis)
 {
 //segundos 1/60 minutos  1/60/60 horas 1/60/60/60
 
-	 float inc = (float)  6*millis / 100000000; 
 
+	float inc = (float)  360 *millis / 60000; 
+	
 	segundos->setAngle(segundos->getAngle() - inc);
 
 	minutos->setAngle(minutos->getAngle() - inc/60);

@@ -30,12 +30,15 @@ void TPinterface::initGUI()
 
 	addCheckboxToPanel(varPanel, "light 1", &(((LightingScene*) scene)->light0On), 1);
 	
-	addCheckboxToPanel(varPanel, "light 2", &(((LightingScene*) scene)->light1On), 1);
+	addCheckboxToPanel(varPanel, "light 2", &(((LightingScene*) scene)->light1On), 2);
 	
-	addCheckboxToPanel(varPanel, "light 3", &(((LightingScene*) scene)->light2On), 1);
+	addCheckboxToPanel(varPanel, "light 3", &(((LightingScene*) scene)->light2On), 3);
 	
-	addCheckboxToPanel(varPanel, "light 4", &(((LightingScene*) scene)->light3On), 1);
+	addCheckboxToPanel(varPanel, "light 4", &(((LightingScene*) scene)->light3On), 4);
 
+	
+	GLUI_Button* pauseClock =  addButtonToPanel(varPanel, "Pause Clock", 5);
+	//pauseClock->
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)
