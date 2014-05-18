@@ -24,7 +24,7 @@ void TPinterface::processKeyboard(unsigned char key, int x, int y)
 void TPinterface::initGUI()
 {
 	// Check CGFinterface.h and GLUI documentation for the types of controls available
-	GLUI_Panel *varPanel= addPanel("Group", 1);
+	GLUI_Panel *varPanel= addPanel("Light:", 1);
 	
 	// You could also pass a reference to a variable from the scene class, if public
 

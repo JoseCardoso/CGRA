@@ -69,10 +69,10 @@ void LightingScene::init()
 	// Sets up some lighting parameters
 	// Computes lighting only using the front face normals and materials
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);  
-	
+
 	// Define ambient light (do not confuse with ambient component of individual lights)
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientLight);  
-	
+
 	// Declares and enables two lights, with null ambient component
 
 	glShadeModel(GL_SMOOTH);
@@ -81,7 +81,7 @@ void LightingScene::init()
 	light0 = new CGFlight(GL_LIGHT0, light0_pos);
 	light0->setAmbient(ambientNull);
 	light0->setSpecular(yellow);
-	
+
 	if (light0On == 0)
 		light0->disable();
 	else
@@ -90,23 +90,23 @@ void LightingScene::init()
 
 	light1 = new CGFlight(GL_LIGHT1, light1_pos);
 	light1->setAmbient(ambientNull);
-	
+
 	if (light1On == 0)
 		light1->disable();
 	else
 		light1->enable();
-	
-	
+
+
 	light2 = new CGFlight(GL_LIGHT2, light2_pos);
 	light2->setAmbient(ambientNull);
-	
+
 	if (light2On == 0)
 		light2->disable();
 	else
 		light2->enable();
-	
 
-	
+
+
 	light3 = new CGFlight(GL_LIGHT3, light3_pos);
 	light3->setAmbient(ambientNull);
 	light3->setSpecular(yellow);
@@ -118,8 +118,8 @@ void LightingScene::init()
 		light3->disable();
 	else
 		light3->enable();
-	
-	
+
+
 
 
 	// Uncomment below to enable normalization of lighting normal vectors
@@ -135,20 +135,20 @@ void LightingScene::init()
 
 	boardA = new Plane(BOARD_A_DIVISIONS);
 	boardB = new Plane(BOARD_B_DIVISIONS);
-	
+
 	//Declares materials
 	materialA = new CGFappearance(ambientNull,difA,specA,shininessA);
 	materialB = new CGFappearance(ambientNull,difB,specB,shininessB);
-	
+
 	//Declares Textures
 	tableAppearence = new CGFappearance(ambientNull,difA,specA,shininessA);
 	tableAppearence->setTexture("table.png");
 	tableAppearence->setTextureWrap(GL_REPEAT,GL_REPEAT);
-	
+
 	slidesAppearence = new CGFappearance(ambientNull,difSlides,specSlides,shininessSlides);
 	slidesAppearence->setTexture("slides.png");
 	slidesAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
-	
+
 	boardAppearence = new CGFappearance(ambientNull,difBoard,specBoard,shininessBoard);
 	boardAppearence->setTexture("board.png");
 	boardAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
@@ -163,7 +163,7 @@ void LightingScene::display()
 {
 
 	// ---- BEGIN Background, camera and axis setup
-	
+
 	// Clear image and depth buffer everytime we update the scene
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
@@ -174,36 +174,26 @@ void LightingScene::display()
 	// Apply transformations corresponding to the camera position relative to the origin
 	CGFscene::activeCamera->applyView();
 
-	
-	if(light0On != 0){
+
+	light0->draw();
+	light0->disable();
+	if (light0On != 0)
 		light0->enable();
-		light0->draw();
-		}
-	else
-		light0->disable();
 
-	if (light1On != 0){
+	light1->draw();
+	light1->disable();
+	if (light1On != 0)
 		light1->enable();
-		light1->draw();
-		}
-	else
-		light1->disable();
 
-	if(light2On != 0)
-		{
+	light2->draw();
+	light2->disable();
+	if (light2On != 0)
 		light2->enable();
-		light2->draw();
-		}
-	else
-		light2->disable();
 
-	if(light3On != 0)
-		{
+	light3->draw();
+	light3->disable();
+	if (light3On != 0)
 		light3->enable();
-		light3->draw();
-		}
-	else
-		light3->disable();
 
 	// Draw axis
 	axis.draw();
@@ -214,58 +204,58 @@ void LightingScene::display()
 
 	//First Table
 	glPushMatrix();
-		glTranslated(5,0,8);
-		table->draw(materialA, tableAppearence);
+	glTranslated(5,0,8);
+	table->draw(materialA, tableAppearence);
 	glPopMatrix();
 	/*
 	//Second Table
 	glPushMatrix();
-		glTranslated(12,0,8);
-		table->draw(materialA, tableAppearence);
+	glTranslated(12,0,8);
+	table->draw(materialA, tableAppearence);
 	glPopMatrix();
 	*/
 	materialA->apply();
 	//Floor
 	glPushMatrix();
-		glTranslated(7.5,0,7.5);
-		glScaled(15,0.2,15);
-		wall->draw();
+	glTranslated(7.5,0,7.5);
+	glScaled(15,0.2,15);
+	wall->draw();
 	glPopMatrix();
 
 	//LeftWall
 	glPushMatrix();
-		glTranslated(0,4,7.5);
-		glRotated(-90.0,0,0,1);
+	glTranslated(0,4,7.5);
+	glRotated(-90.0,0,0,1);
 
-		glScaled(8,0.2,15);
-		wall->draw();
+	glScaled(8,0.2,15);
+	wall->draw();
 	glPopMatrix();
 
 	//PlaneWall
 	glPushMatrix();
-		glTranslated(7.5,4,0);
-		glRotated(90.0,1,0,0);
-		glScaled(15,0.2,8);
-		wall->draw();
+	glTranslated(7.5,4,0);
+	glRotated(90.0,1,0,0);
+	glScaled(15,0.2,8);
+	wall->draw();
 	glPopMatrix();
 
 
 	// Board A
 	glPushMatrix();
-		glTranslated(4,4,0.2);
-		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
-		glRotated(90.0,1,0,0);
-		slidesAppearence->apply();
-		boardA->draw();
+	glTranslated(4,4,0.2);
+	glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+	glRotated(90.0,1,0,0);
+	slidesAppearence->apply();
+	boardA->draw();
 	glPopMatrix();
-	
+
 	//PlaneB
 	glPushMatrix();
-		glTranslated(10.5,4,0.2);
-		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
-		glRotated(90.0,1,0,0);
-		boardAppearence->apply();
-		boardB->draw();
+	glTranslated(10.5,4,0.2);
+	glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+	glRotated(90.0,1,0,0);
+	boardAppearence->apply();
+	boardB->draw();
 	glPopMatrix();
 
 	//cylinder
@@ -288,8 +278,8 @@ void LightingScene::display()
 
 	//clock
 	glPushMatrix();
-		glTranslated(7,8,0);
-		clock->draw();
+	glTranslated(7,8,0);
+	clock->draw();
 	glPopMatrix();
 
 	//robot
@@ -301,7 +291,7 @@ void LightingScene::display()
 	glPopMatrix();
 
 	// ---- END Primitive drawing section
-	
+
 
 	// We have been drawing in a memory area that is not visible - the back buffer, 
 	// while the graphics card is showing the contents of another buffer - the front buffer
@@ -353,13 +343,13 @@ int LightingScene:: pauseResetClock(int call)
 {
 	if(call = 0)
 	{
-	clockAnimation = !clockAnimation;
-	return 0;
+		clockAnimation = !clockAnimation;
+		return 0;
 	}
 	else
 	{
-	clock = new myClock();
-	clockAnimation = !clockAnimation;
-	return 1;
+		clock = new myClock();
+		clockAnimation = !clockAnimation;
+		return 1;
 	}
 }
