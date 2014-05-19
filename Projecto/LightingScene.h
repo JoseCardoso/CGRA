@@ -17,11 +17,13 @@ class LightingScene : public CGFscene
 public:
 	int sceneVar;
 	int light0On, light1On, light2On, light3On;
+	int textureSelector;
 	void init();
 	void display();
 	void update(unsigned long millis);
 	void processKeyboard(unsigned char key);
 	int pauseResetClock();
+	void setRobotTexture();
 
 	CGFlight* light0;
 	CGFlight* light1;
@@ -46,8 +48,14 @@ public:
 	CGFappearance* wallAppearence;
 	CGFappearance* boardAppearence;
 	CGFappearance* windowAppearence;
-	CGFappearance* robotAppearence;
 	CGFappearance* clockAppearence;
+
+	CGFappearance* robotAppearence;
+	CGFappearance* robot2Appearence;
+	CGFappearance* robot3Appearence;
+	CGFappearance* robot4Appearence;
+	CGFappearance* robot5Appearence;
+
 	
 	~LightingScene();
 };

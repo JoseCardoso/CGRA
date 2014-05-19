@@ -62,6 +62,7 @@ void LightingScene::init()
 	light1On = 1;
 	light2On = 0;
 	light3On = 0;
+	textureSelector = 1;
 	clockAnimation = true;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
@@ -153,7 +154,7 @@ void LightingScene::init()
 	boardAppearence->setTexture("board.png");
 	boardAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
 
-	
+
 	windowAppearence = new CGFappearance(ambientNull , difA , specA , shininessA);
 	windowAppearence->setTexture("window.png");
 	windowAppearence->setTextureWrap(GL_CLAMP, GL_CLAMP);
@@ -162,14 +163,33 @@ void LightingScene::init()
 	floorAppearence->setTexture("floor.png");
 	floorAppearence->setTextureWrap(GL_CLAMP, GL_CLAMP);
 
-	robotAppearence = new CGFappearance (ambientNull, difA , specA, shininessA);
-	robotAppearence->setTexture("robot1.jpg");
-	robotAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
-	
 	clockAppearence = new CGFappearance (ambientNull , difA , specA, shininessA);
 	clockAppearence->setTexture("clock.png");
 	clockAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	robotAppearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robotAppearence->setTexture("robot1.jpg");
+	robotAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	robot2Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robot2Appearence->setTexture("robot2.jpg");
+	robot2Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
 	
+	robot3Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robot3Appearence->setTexture("robot3.png");
+	robot3Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	
+	robot4Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robot4Appearence->setTexture("robot4.png");
+	robot4Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	
+	robot5Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
+	robot5Appearence->setTexture("robot5.jpg");
+	robot5Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
 	setUpdatePeriod(100);
 }
 
@@ -235,51 +255,51 @@ void LightingScene::display()
 	glScaled(15,0.2,15);
 	wall->draw();
 	glPopMatrix();
-	
+
 	//LeftWall
 	glPushMatrix();
-		glTranslated(0,4,7.5);
-		glRotated(-90.0,0,0,1);
-		glScaled(8,0.2,15);
-		wall->setHeight(8);
-		wall->setWidth(15);
-		windowAppearence->apply();
-		wall->drawCentered(true);
-	glPopMatrix();
-	
-	//PlaneWall
-	glPushMatrix();
-		glTranslated(7.5,4,0);
-		glRotated(90.0,1,0,0);
-		glScaled(15,0.2,8);
-		materialA->apply();
-		wall->draw();
+	glTranslated(0,4,7.5);
+	glRotated(-90.0,0,0,1);
+	glScaled(8,0.2,15);
+	wall->setHeight(8);
+	wall->setWidth(15);
+	windowAppearence->apply();
+	wall->drawCentered(true);
 	glPopMatrix();
 
-	
+	//PlaneWall
+	glPushMatrix();
+	glTranslated(7.5,4,0);
+	glRotated(90.0,1,0,0);
+	glScaled(15,0.2,8);
+	materialA->apply();
+	wall->draw();
+	glPopMatrix();
+
+
 	// Board A
 	glPushMatrix();
-		glTranslated(4,4,0.2);
-		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
-		boardA->setHeight(BOARD_HEIGHT);
-		boardA->setWidth(BOARD_WIDTH);
-		glRotated(90.0,1,0,0);
-		slidesAppearence->apply();
-		boardA->drawCentered(false);
+	glTranslated(4,4,0.2);
+	glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+	boardA->setHeight(BOARD_HEIGHT);
+	boardA->setWidth(BOARD_WIDTH);
+	glRotated(90.0,1,0,0);
+	slidesAppearence->apply();
+	boardA->drawCentered(false);
 	glPopMatrix();
-	
+
 	//PlaneB
 	glPushMatrix();
-		boardAppearence->apply();
-		glTranslated(10.5,4,0.2);
-		glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
-		boardB->setHeight(BOARD_HEIGHT);
-		boardB->setWidth(BOARD_WIDTH);
-		glRotated(90.0,1,0,0);
-		boardAppearence->apply();
-		boardB->drawCentered(false);
+	boardAppearence->apply();
+	glTranslated(10.5,4,0.2);
+	glScaled(BOARD_WIDTH,BOARD_HEIGHT,1);
+	boardB->setHeight(BOARD_HEIGHT);
+	boardB->setWidth(BOARD_WIDTH);
+	glRotated(90.0,1,0,0);
+	boardAppearence->apply();
+	boardB->drawCentered(false);
 	glPopMatrix();
-	
+
 	//cylinder
 	materialA->apply();
 	glPushMatrix();
@@ -308,8 +328,8 @@ void LightingScene::display()
 	//robot
 
 	glPushMatrix();
-	robotAppearence->apply();
 	glTranslated(4,0,4);
+	setRobotTexture();
 	robot->draw();
 	glPopMatrix();
 
@@ -362,4 +382,29 @@ int LightingScene:: pauseResetClock()
 		clockAnimation = !clockAnimation;
 		return 1;
 	}
+}
+
+
+void LightingScene:: setRobotTexture()
+{
+	switch(textureSelector)
+	{
+
+	case 1:
+		robotAppearence->apply();
+		break;
+	case 2:
+		robot2Appearence->apply();
+		break;
+	case 3:
+		robot3Appearence->apply();
+		break;
+	case 4:
+		robot4Appearence->apply();
+		break;	
+	case 5:
+		robot5Appearence->apply();
+		break;
+	}
+	
 }

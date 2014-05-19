@@ -41,6 +41,20 @@ void TPinterface::initGUI()
 	
 	GLUI_Button* pauseClock =  addButtonToPanel(varPanel, "Pause/Reset Clock", 5);
 	
+	addColumnToPanel(varPanel);
+
+	int* var = &(((LightingScene*) scene)->textureSelector);
+
+	textures = addListboxToPanel(varPanel, "Textures",var, 6);
+
+	textures->add_item(1, "Default robot");
+	textures->add_item(2, "Army robot");
+	
+	textures->add_item(3, "Groovy robot");
+	
+	textures->add_item(4, "Deformed robot");
+	
+	textures->add_item(5, "Fancy robot");
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)
@@ -52,7 +66,9 @@ void TPinterface::processGUI(GLUI_Control *ctrl)
 		{
 			((LightingScene*) scene)->pauseResetClock();
 			break;
-		};
-	};
+		}/*
+		case 6:
+			((LightingScene*) scene)->setRobotTexture();
+	*/}
 }
 

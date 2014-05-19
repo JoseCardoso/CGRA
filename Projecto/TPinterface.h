@@ -5,6 +5,8 @@
 #include "MyRobot.h"
 
 class TPinterface: public CGFinterface {
+	
+	GLUI_Listbox* textures;
 	public:
 		TPinterface();
 
