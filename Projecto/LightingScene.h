@@ -18,6 +18,7 @@ public:
 	int sceneVar;
 	int light0On, light1On, light2On, light3On;
 	int textureSelector;
+	int wire;
 	void init();
 	void display();
 	void update(unsigned long millis);

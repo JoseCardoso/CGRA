@@ -8,11 +8,7 @@ myCylinder::myCylinder(int slices, int stacks, bool smooth) {
 
 
 void myCylinder::draw()
-{   /*
-	int temp = slices/4;
-	int k = 0;
-	int counter = 0;
-	*/
+{  
 	double myPi = acos(-1.0);
 	double a=0;
 	double da =360/ (double) slices;
@@ -39,57 +35,9 @@ void myCylinder::draw()
 
 		glBegin(GL_TRIANGLES);
 		glNormal3d(0,0,1);
-		/*  NOT WORKING Properly
-		glTexCoord2d(tx , ty); */glVertex3d(x1 ,y1 , 1);
-		/*
-		if (k == 0){
-
-			if( counter < temp){
-				tx += (double) 1/temp;
-				counter++;
-			}
-			else{
-				ty += (double) 1/temp;
-				counter = 0;
-				k++;
-			}
-		}
-		else if (k == 1){
-
-			if( counter < temp){
-				ty += (double) 1/temp;
-				counter++;
-			}
-			else{
-				tx -= (double) 1/temp;
-				counter = 0;
-				k++;
-			}
-		}
-		else if (k == 2){
-
-			if( counter < temp){
-				tx -= (double) 1/temp;
-				counter++;
-			}
-			else{
-				ty -= (double) 1/temp;
-				counter = 0;
-				k++;
-			}
-		}
-		else if (k == 3){
-
-			if( counter < temp){
-				ty -= (double) 1/temp;
-				counter++;
-			}
-		
-		}
-
-		*/
-		/*glTexCoord2d(tx,ty); */glVertex3d(x2 ,y2 ,1);
-		/*glTexCoord2d(0.5,0.5);*/ glVertex3d(0,0,1);
+		glTexCoord2f(0.5+x1/2,0.5+y1/2);glVertex3d(x1 ,y1 , 1);
+		glTexCoord2f(0.5+x2/2,0.5+y2/2); glVertex3d(x2 ,y2 ,1);
+		glTexCoord2d(0.5,0.5); glVertex3d(0,0,1);
 		glEnd();
 
 

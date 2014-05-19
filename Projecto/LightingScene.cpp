@@ -63,6 +63,8 @@ void LightingScene::init()
 	light2On = 0;
 	light3On = 0;
 	textureSelector = 1;
+	wire = 0;
+
 	clockAnimation = true;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
@@ -329,8 +331,15 @@ void LightingScene::display()
 
 	glPushMatrix();
 	glTranslated(4,0,4);
+	if (wire){
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	robot->draw();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	else{
 	setRobotTexture();
 	robot->draw();
+	}
 	glPopMatrix();
 
 	// ---- END Primitive drawing section

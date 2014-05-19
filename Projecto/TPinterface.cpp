@@ -23,6 +23,11 @@ void TPinterface::processKeyboard(unsigned char key, int x, int y)
 
 void TPinterface::initGUI()
 {
+	
+	int* textureSelect = &(((LightingScene*) scene)->textureSelector);
+	
+	int* wire = &(((LightingScene*) scene)->wire);
+
 	// Check CGFinterface.h and GLUI documentation for the types of controls available
 	GLUI_Panel *varPanel= addPanel("Light:", 1);
 	
@@ -43,18 +48,18 @@ void TPinterface::initGUI()
 	
 	addColumnToPanel(varPanel);
 
-	int* var = &(((LightingScene*) scene)->textureSelector);
 
-	textures = addListboxToPanel(varPanel, "Textures",var, 6);
+	GLUI_Listbox* textures = addListboxToPanel(varPanel, "Textures",textureSelect, 6);
 
 	textures->add_item(1, "Default robot");
 	textures->add_item(2, "Army robot");
-	
 	textures->add_item(3, "Groovy robot");
-	
 	textures->add_item(4, "Deformed robot");
-	
 	textures->add_item(5, "Fancy robot");
+
+	GLUI_RadioGroup* wireFrameGroup = addRadioGroupToPanel(varPanel,wire, 7);
+	addRadioButtonToGroup(wireFrameGroup, "\tTexture");
+	addRadioButtonToGroup(wireFrameGroup, "\tWire");
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)
