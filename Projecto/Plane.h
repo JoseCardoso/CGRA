@@ -14,6 +14,9 @@ public:
 	void drawCentered(bool window);
 	void setHeight(double h);
 	void setWidth(double w);
+	void drawWindowedWall();
+	void drawWindow();
+	void drawFloor(int sizex, int sizey);
 
 	//glTextlevelparameter
 private:

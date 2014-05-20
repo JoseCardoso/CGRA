@@ -35,6 +35,7 @@ public:
 	myTable* table;
 	myCylinder* cylinder;
 	myCylinder* cylinder1;
+	myCylinder* skybox;
 	myClock* clock;
 	Plane* wall;
 	Plane* boardA;
@@ -50,6 +51,7 @@ public:
 	CGFappearance* boardAppearence;
 	CGFappearance* windowAppearence;
 	CGFappearance* clockAppearence;
+	CGFappearance* landscapeAppearence;
 
 	CGFappearance* robotAppearence;
 	CGFappearance* robot2Appearence;

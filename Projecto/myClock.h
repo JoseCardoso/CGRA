@@ -18,6 +18,7 @@ class myClock : public CGFobject {
 		myClock();
 		void draw();
 		void update(unsigned long);
+		void resetClock();
 
 };
 

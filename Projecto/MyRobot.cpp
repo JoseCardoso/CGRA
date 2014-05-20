@@ -37,7 +37,7 @@ void myRobot :: draw()
 
 		glPushMatrix();
 		glRotated(180, 1,0,0);
-		glBegin(GL_QUADS);
+		glBegin(GL_TRIANGLE_STRIP);
 		glNormal3d(0, 1,0);
 		glVertex3d(0.5,0,0.5);
 		glVertex3d(0.5,0,-0.5);
@@ -153,7 +153,7 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 
 			for (unsigned int j = 0 ; j < 3 ; j++)
 			{
-				glBegin(GL_QUADS);
+				glBegin(GL_TRIANGLE_STRIP);
 
 				glTexCoord2d(texturex[i][j]  , texturey[i][j] );
 				glNormal3d(normalx[i][j],0,normalz[i][j]); 
@@ -164,13 +164,15 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 				glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 				glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
 
+				glTexCoord2d(texturex[i+1][j]  , texturey[i+1][j] );
+				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
+				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
+				
 				glTexCoord2d(texturex[i+1][j+1]  , texturey[i+1][j+1] );
 				glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
 				glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
 
-				glTexCoord2d(texturex[i+1][j]  , texturey[i+1][j] );
-				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
-				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
+				
 				glEnd();
 			}
 
@@ -182,7 +184,7 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 
 			for (unsigned int j = 0 ; j < 3 ; j++)
 			{
-				glBegin(GL_QUADS);
+				glBegin(GL_TRIANGLE_STRIP);
 
 				glTexCoord2d(1- texturey[i][j],texturex[i][j] );
 				glNormal3d(normalx[i][j],0,normalz[i][j]); 
@@ -193,13 +195,14 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 				glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 				glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
 
+				glTexCoord2d(1-texturey[i+1][j],texturex[i+1][j]  );
+				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
+				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
+
 				glTexCoord2d( 1-texturey[i+1][j+1], texturex[i+1][j+1] );
 				glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
 				glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
 
-				glTexCoord2d(1-texturey[i+1][j],texturex[i+1][j]  );
-				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
-				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
 				glEnd();
 			}
 
@@ -212,7 +215,7 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 
 			for (unsigned int j = 0 ; j < 3 ; j++)
 			{
-				glBegin(GL_QUADS);
+				glBegin(GL_TRIANGLE_STRIP);
 
 				glTexCoord2d(1-texturex[i][j]  , 1-texturey[i][j] );
 				glNormal3d(normalx[i][j],0,normalz[i][j]); 
@@ -223,13 +226,15 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 				glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 				glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
 
-				glTexCoord2d(1-texturex[i+1][j+1]  , 1-texturey[i+1][j+1] );
-				glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
-				glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
 
 				glTexCoord2d(1-texturex[i+1][j]  ,1- texturey[i+1][j] );
 				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
 				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
+
+				glTexCoord2d(1-texturex[i+1][j+1]  , 1-texturey[i+1][j+1] );
+				glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
+				glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
+
 				glEnd();
 			}
 
@@ -242,7 +247,7 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 
 			for (unsigned int j = 0 ; j < 3 ; j++)
 			{
-				glBegin(GL_QUADS);
+				glBegin(GL_TRIANGLE_STRIP);
 
 				glTexCoord2d( texturey[i][j],1-texturex[i][j] );
 				glNormal3d(normalx[i][j],0,normalz[i][j]); 
@@ -253,13 +258,14 @@ void myRobot :: drawComponent(int side)//1 = lado da frente, 2 = esquerda, 3 = t
 				glNormal3d(normalx[i][j+1],0,normalz[i][j+1]); 
 				glVertex3d(coordx[i][j+1] , coordy[i][j+1] , coordz[i][j+1]);
 
+				glTexCoord2d(texturey[i+1][j],1-texturex[i+1][j]  );
+				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
+				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
+
 				glTexCoord2d( texturey[i+1][j+1],1- texturex[i+1][j+1] );
 				glNormal3d(normalx[i+1][j+1],0,normalz[i+1][j+1]);	
 				glVertex3d(coordx[i+1][j+1] , coordy[i+1][j+1] , coordz[i+1][j+1]);
 
-				glTexCoord2d(texturey[i+1][j],1-texturex[i+1][j]  );
-				glNormal3d(normalx[i+1][j],0,normalz[i+1][j]);	
-				glVertex3d(coordx[i+1][j] , coordy[i+1][j] , coordz[i+1][j]);
 				glEnd();
 			}
 

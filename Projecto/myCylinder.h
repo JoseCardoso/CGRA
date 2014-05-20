@@ -15,6 +15,7 @@ class myCylinder : public CGFobject {
 	public:
 		myCylinder(int slices, int stacks, bool smooth);
 		void draw();
+		void drawSky();
 
 };
 

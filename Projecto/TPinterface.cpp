@@ -60,6 +60,12 @@ void TPinterface::initGUI()
 	GLUI_RadioGroup* wireFrameGroup = addRadioGroupToPanel(varPanel,wire, 7);
 	addRadioButtonToGroup(wireFrameGroup, "\tTexture");
 	addRadioButtonToGroup(wireFrameGroup, "\tWire");
+
+	if((*wire))
+		textures->disable();
+	else
+		textures->enable();
+
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)

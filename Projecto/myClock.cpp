@@ -67,3 +67,11 @@ void myClock:: update(unsigned long millis)
 	}
 
 }
+
+void myClock:: resetClock()
+{
+	segundos->setAngle(90);
+	minutos->setAngle(180);
+	horas->setAngle(-90);
+	
+}

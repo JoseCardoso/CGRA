@@ -134,6 +134,7 @@ void LightingScene::init()
 	clock = new myClock();
 	cylinder = new myCylinder(10,10, true);
 	cylinder1 = new myCylinder(10,10,false);
+	skybox = new myCylinder(10,10,true);
 	robot = new myRobot(10);
 
 	boardA = new Plane(BOARD_A_DIVISIONS);
@@ -163,7 +164,7 @@ void LightingScene::init()
 
 	floorAppearence = new CGFappearance(ambientNull, difA, specA , shininessA);
 	floorAppearence->setTexture("floor.png");
-	floorAppearence->setTextureWrap(GL_CLAMP, GL_CLAMP);
+	floorAppearence->setTextureWrap(GL_REPEAT, GL_REPEAT);
 
 	clockAppearence = new CGFappearance (ambientNull , difA , specA, shininessA);
 	clockAppearence->setTexture("clock.png");
@@ -191,6 +192,10 @@ void LightingScene::init()
 	robot5Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
 	robot5Appearence->setTexture("robot5.jpg");
 	robot5Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	landscapeAppearence = new CGFappearance (globalAmbientLight, difA , specA, shininessA);
+	landscapeAppearence->setTexture("panoramic.jpg");
+	landscapeAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
 
 	setUpdatePeriod(100);
 }
@@ -253,18 +258,22 @@ void LightingScene::display()
 	materialA->apply();
 	//Floor
 	glPushMatrix();
+	floorAppearence->apply();
 	glTranslated(7.5,0,7.5);
 	glScaled(15,0.2,15);
-	wall->draw();
+	wall->drawFloor(10, 12);
 	glPopMatrix();
 
 	//LeftWall
 	glPushMatrix();
+	/*windowAppearence->apply();
+	wall->drawWindowedWall();
+	*/
 	glTranslated(0,4,7.5);
 	glRotated(-90.0,0,0,1);
 	glScaled(8,0.2,15);
-	wall->setHeight(8);
-	wall->setWidth(15);
+	wall->setHeight(15);
+	wall->setWidth(8);
 	windowAppearence->apply();
 	wall->drawCentered(true);
 	glPopMatrix();
@@ -342,6 +351,16 @@ void LightingScene::display()
 	}
 	glPopMatrix();
 
+
+	//skybox
+
+	glPushMatrix();
+	landscapeAppearence->apply();
+	glTranslated(5,20,7.5);
+	glScaled(30,30,30);
+	glRotated(90,1,0,0);
+	skybox->drawSky();
+	glPopMatrix();
 	// ---- END Primitive drawing section
 
 
@@ -387,7 +406,7 @@ int LightingScene:: pauseResetClock()
 	}
 	else
 	{
-		clock = new myClock();
+		clock->resetClock();
 		clockAnimation = !clockAnimation;
 		return 1;
 	}
