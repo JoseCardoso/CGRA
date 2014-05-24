@@ -46,8 +46,8 @@ void TPinterface::initGUI()
 
 	addColumnToPanel(varPanel);
 	
-	GLUI_Button* pauseClock =  addButtonToPanel(varPanel, "Pause/Reset Clock", 5);
-	
+	GLUI_Button* pauseClock =  addButtonToPanel(varPanel, "Pause Clock", 5);
+	GLUI_Button* resetClock =  addButtonToPanel(varPanel, "Reset Clock", 10);
 	addColumnToPanel(varPanel);
 
 
@@ -87,9 +87,15 @@ void TPinterface::processGUI(GLUI_Control *ctrl)
 	{
 		case 5:
 		{
-			((LightingScene*) scene)->pauseResetClock();
+			((LightingScene*) scene)->pauseClock();
 			break;
 		}
+		case 10:
+			{
+				
+			((LightingScene*) scene)->resetClock();
+			break;
+			}
 	
 	}
 }

@@ -24,7 +24,8 @@ public:
 	void display();
 	void update(unsigned long millis);
 	void processKeyboard(unsigned char key);
-	int pauseResetClock();
+	int pauseClock();
+	int resetClock();
 	void setRobotTexture();
 	void setLandscape();
 
@@ -32,6 +33,7 @@ public:
 	CGFlight* light1;
 	CGFlight* light2;
 	CGFlight* light3;
+	CGFlight* dayLight;
 
 
 	myTable* table;

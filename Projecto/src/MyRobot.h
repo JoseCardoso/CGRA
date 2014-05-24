@@ -16,13 +16,16 @@ class myRobot : public CGFobject {
 	int stacks;
 	double teta; //angulo em relação a z de rotaçao ao premir a tecla
 	double x; //coordenadas para calcular avanço e recuo
+	double y;
 	double z; //
-
+	double vy;
+	long t0;
 	public:
 		myRobot(int stacks);
 		void draw();
 		void drawComponent(int side);
 		void processKeyboard(unsigned char key);
+		void update(long millis);
 
 };
 

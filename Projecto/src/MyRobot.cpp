@@ -4,14 +4,17 @@ myRobot :: myRobot( int stacks)
 {	this->stacks = stacks;
 	this->teta = 0;
 	this->x = 0;
+	this->y = 0;
 	this->z = 0;
+	this->vy = 0;
+	this->t0 = 0;
 }
 
 
 void myRobot :: draw()
 {
 	glPushMatrix();
-	glTranslated(x, 0 ,z);
+	glTranslated(x, y ,z);
 	glRotated(teta, 0 ,1,0);
 	
 
@@ -37,7 +40,7 @@ void myRobot :: draw()
 
 		glPushMatrix();
 		glRotated(180, 1,0,0);
-		glBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_QUADS);
 		glNormal3d(0, 1,0);
 		glVertex3d(0.5,0,0.5);
 		glVertex3d(0.5,0,-0.5);
@@ -295,6 +298,38 @@ void myRobot:: processKeyboard(unsigned char key)
 	case 'L':
 		teta -= 15; 
 		break;
+	case ' ':
+		vy = 1;
+		break;
 	}
 
+}
+
+void myRobot:: update(long millis)
+{
+	long deltaT = millis - t0;
+	t0=millis;
+	vy -= (double) deltaT/200;
+	
+	if ( y <= 0 && vy < 0){
+	y = 0;
+	vy = 0;
+	}
+	else
+	{	if ((x > -2 && x < 4) && (z < 5.5 && z >2.0))
+		{
+			if (vy >0 && y <= 3.65)
+				vy = -vy;
+			else if (vy <= 0 && y <= 3.65 )
+			{
+				vy = 0;
+				y = 3.65;
+			}
+			else
+				y += vy;
+		}
+		else
+			y +=vy;
+
+	}
 }

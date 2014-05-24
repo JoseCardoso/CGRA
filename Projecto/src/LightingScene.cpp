@@ -20,6 +20,8 @@ float light1_pos[4] = {10.5, 6.0, 1.0, 1.0};
 float light2_pos[4] = {10.5, 6.0, 5.0, 1.0};
 float light3_pos[4] = {4, 6.0, 5.0, 1.0};
 
+float light5_pos[4] = { -6.0,9.0, 7.5,1.0};
+
 // Global ambient light (do not confuse with ambient component of individual lights)
 float globalAmbientLight[4]= {0.2,0.2,0.2,1.0};
 // number of divisions
@@ -54,6 +56,7 @@ float shininessBoard = 200.f;
 
 float ambientNull[4]={0,0,0,1};
 float yellow[4]={1,1,0,1};
+float white[4] = {1,1,1,1};
 
 void LightingScene::init() 
 {
@@ -124,6 +127,11 @@ void LightingScene::init()
 		light3->enable();
 
 
+	dayLight =  new CGFlight(GL_LIGHT3, light5_pos);
+	dayLight->setAmbient(white);
+	dayLight->setSpecular(white);
+
+	dayLight->enable();
 
 
 	// Uncomment below to enable normalization of lighting normal vectors
@@ -194,9 +202,9 @@ void LightingScene::init()
 	robot5Appearence = new CGFappearance (ambientNull, difA , specA, shininessA);
 	robot5Appearence->setTexture("robot5.jpg");
 	robot5Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
-
+	
 	landscapeAppearence = new CGFappearance (globalAmbientLight, difA , specA, shininessA);
-	landscapeAppearence->setTexture("panoramic.jpg");
+	/*landscapeAppearence->setTexture("panoramic.jpg");
 	landscapeAppearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
 
 	landscape2Appearence = new CGFappearance (globalAmbientLight, difA , specA, shininessA);
@@ -212,8 +220,8 @@ void LightingScene::init()
 	landscape4Appearence = new CGFappearance (globalAmbientLight, difA , specA, shininessA);
 	landscape4Appearence->setTexture("panoramic4.jpg");
 	landscape4Appearence->setTextureWrap(GL_CLAMP,GL_CLAMP);
-
-	setUpdatePeriod(100);
+	*/
+	setUpdatePeriod(1);
 }
 
 void LightingScene::display() 
@@ -251,6 +259,14 @@ void LightingScene::display()
 	light3->disable();
 	if (light3On != 0)
 		light3->enable();
+
+	dayLight->draw();
+	dayLight->enable();
+	if(landscapeSelector==4)
+		dayLight->disable();
+	
+	
+
 
 	// Draw axis
 	axis.draw();
@@ -348,7 +364,8 @@ void LightingScene::display()
 	//clock
 	glPushMatrix();
 	clockAppearence->apply();
-	glTranslated(7,8,0);
+	glTranslated(7.25,7,0.25);
+	
 	clock->draw();
 	glPopMatrix();
 
@@ -371,8 +388,9 @@ void LightingScene::display()
 	//skybox
 
 	glPushMatrix();
-	glTranslated(5,-7.5,7.5);
-	glScaled(30,30,30);
+	glTranslated(7,-2.5,7);
+	glScaled(12,12,12);
+	glRotated(45,0,1,0);
 	glRotated(-90,1,0,0);
 	setLandscape();
 	skybox->drawSky();
@@ -391,6 +409,7 @@ void LightingScene::update(unsigned long millis)
 {
 	if(clockAnimation)
 		clock->update(millis);
+	robot->update(millis);
 
 }
 
@@ -413,7 +432,7 @@ void LightingScene::processKeyboard(unsigned char key)
 	robot->processKeyboard(key);
 }
 
-int LightingScene:: pauseResetClock()
+int LightingScene:: pauseClock()
 {
 	if(clockAnimation)
 	{
@@ -422,11 +441,19 @@ int LightingScene:: pauseResetClock()
 	}
 	else
 	{
-		clock->resetClock();
 		clockAnimation = !clockAnimation;
 		return 1;
 	}
 }
+
+int LightingScene:: resetClock()
+{
+	
+		clock->resetClock();
+		return 1;
+	
+}
+
 
 
 void LightingScene:: setRobotTexture()
