@@ -3,9 +3,12 @@
 
 #include "CGFinterface.h"
 #include "CanvasTool.h"
+#include "CircleTool.h"
+#include "PointTool.h"
+#include "RectTool.h"
 
 // Adjust below for adding more tools
-#define TOOL_SIZE 3
+#define TOOL_SIZE 4
 
 class CanvasInterface: public CGFinterface {
 

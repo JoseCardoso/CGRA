@@ -121,11 +121,19 @@ void LineTool::drawLine(int xi, int yi, int xf, int yf)
 
 
 	if(xi == xf)
+		if(yf > yi)
 		for(int i=yi; i<yf; i++)
+			canvas->setPixel(xi,i);
+		else
+			for(int i=yf; i<yi; i++)
 			canvas->setPixel(xi,i);
 	else if(yi == yf)
 	{
+		if(xf > xi)
 		for(int i=xi; i<xf; i++)
+			canvas->setPixel(i,yi);
+		else
+			for(int i=xf; i<xi; i++)
 			canvas->setPixel(i,yi);
 	}
 	else if( xi <xf && yi < yf)//primeiro quadrante
